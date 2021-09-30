@@ -1,15 +1,18 @@
 import React from 'react';
 import styled from 'styled-components/macro';
 
+import { useCalendar } from './CalendarService';
 import CalendarHead from 'components/calendar/template/CalendarHead';
 import CalendarBody from 'components/calendar/template/CalendarBody';
 
 const CalendarContainer = () => {
+  const { calendarState, dateArr } = useCalendar();
+
   return (
     <Container>
       <CalendarBox>
-        <CalendarHead />
-        <CalendarBody />
+        <CalendarHead calendarState={calendarState} />
+        <CalendarBody dateArr={dateArr} />
       </CalendarBox>
     </Container>
   );

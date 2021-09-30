@@ -1,11 +1,13 @@
 import React from 'react';
 import styled from 'styled-components/macro';
 
-const CalendarBody = () => {
-  const dateArr = [
-    30, 31, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
-    20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 1, 2, 3,
-  ];
+import CalendarItem from 'components/calendar/template/CalendarItem';
+
+const CalendarBody = ({ dateArr }) => {
+  // const dateArr = [
+  //   27, 28, 29, 30, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17,
+  //   18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31,
+  // ];
 
   return (
     <BodyBlock>
@@ -20,7 +22,7 @@ const CalendarBody = () => {
       </DaysWrapper>
       <DatesWrapper>
         {dateArr.map((ele, idx) => (
-          <Date key={idx}>{ele}</Date>
+          <CalendarItem key={idx} data={ele}></CalendarItem>
         ))}
       </DatesWrapper>
     </BodyBlock>
@@ -53,10 +55,4 @@ const DatesWrapper = styled.div`
   display: flex;
   flex-flow: row wrap;
   height: 90%;
-`;
-
-const Date = styled.div`
-  width: calc(100% / 7);
-  padding: 15px;
-  text-align: center;
 `;

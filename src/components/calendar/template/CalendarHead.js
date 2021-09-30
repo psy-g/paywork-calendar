@@ -1,11 +1,15 @@
 import React from 'react';
 import styled from 'styled-components/macro';
 
-const CalendarHead = () => {
+import CalendarButton from 'components/calendar/template/CalendarButton';
+
+const CalendarHead = ({ calendarState }) => {
   return (
     <HeadBlock>
-      <span>2021.10</span>
-      <span>선택</span>
+      <span>
+        {calendarState.year}. {calendarState.month + 1}
+      </span>
+      <CalendarButton />
       <span>이번달</span>
     </HeadBlock>
   );
