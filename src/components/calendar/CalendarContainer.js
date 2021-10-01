@@ -1,15 +1,22 @@
 import React from 'react';
 import styled from 'styled-components/macro';
 
+import { useCalendar } from './CalendarService';
 import CalendarHead from 'components/calendar/template/CalendarHead';
 import CalendarBody from 'components/calendar/template/CalendarBody';
 
 const CalendarContainer = () => {
+  const { dateState, checkState, changeFocus, changeDate } = useCalendar();
+
   return (
     <Container>
       <CalendarBox>
-        <CalendarHead />
-        <CalendarBody />
+        <CalendarHead dateState={dateState} changeDate={changeDate} />
+        <CalendarBody
+          checkState={checkState}
+          changeFocus={changeFocus}
+          changeDate={changeDate}
+        />
       </CalendarBox>
     </Container>
   );

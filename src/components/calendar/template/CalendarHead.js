@@ -1,12 +1,20 @@
 import React from 'react';
 import styled from 'styled-components/macro';
 
-const CalendarHead = () => {
+import CalendarButton from 'components/calendar/template/CalendarButton';
+
+const CalendarHead = ({ dateState, changeDate }) => {
+  const handlerThisMonth = () => {
+    changeDate(0);
+  };
+
   return (
     <HeadBlock>
-      <span>2021.10</span>
-      <span>선택</span>
-      <span>이번달</span>
+      <MonthWrapper>
+        {dateState.year}. {dateState.month + 1}
+      </MonthWrapper>
+      <CalendarButton changeDate={changeDate} />
+      <ThisMonthWrapper onClick={handlerThisMonth}>이번달</ThisMonthWrapper>
     </HeadBlock>
   );
 };
@@ -18,8 +26,14 @@ const HeadBlock = styled.div`
   width: 100%;
   height: 15%;
 
-  span {
+  div {
     width: calc(100% / 3);
-    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 `;
+
+const MonthWrapper = styled.div``;
+
+const ThisMonthWrapper = styled.div``;
