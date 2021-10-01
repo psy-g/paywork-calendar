@@ -3,7 +3,7 @@ import styled from 'styled-components/macro';
 
 import CalendarItem from 'components/calendar/template/CalendarItem';
 
-const CalendarBody = ({ dateState, changeState }) => {
+const CalendarBody = ({ checkState, changeFocus, changeDate }) => {
   return (
     <BodyBlock>
       <DaysWrapper>
@@ -16,8 +16,13 @@ const CalendarBody = ({ dateState, changeState }) => {
         <span>일</span>
       </DaysWrapper>
       <DatesWrapper>
-        {dateState.map((ele, idx) => (
-          <CalendarItem key={idx} data={ele} changeState={changeState} />
+        {checkState.map((ele, idx) => (
+          <CalendarItem
+            key={idx}
+            data={ele}
+            changeDate={changeDate}
+            changeFocus={changeFocus}
+          />
         ))}
       </DatesWrapper>
     </BodyBlock>

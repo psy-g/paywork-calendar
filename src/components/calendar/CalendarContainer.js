@@ -6,13 +6,17 @@ import CalendarHead from 'components/calendar/template/CalendarHead';
 import CalendarBody from 'components/calendar/template/CalendarBody';
 
 const CalendarContainer = () => {
-  const { calendarState, dateState, changeState, saveState } = useCalendar();
+  const { dateState, checkState, changeFocus, changeDate } = useCalendar();
 
   return (
     <Container>
       <CalendarBox>
-        <CalendarHead calendarState={calendarState} saveState={saveState} />
-        <CalendarBody dateState={dateState} changeState={changeState} />
+        <CalendarHead dateState={dateState} changeDate={changeDate} />
+        <CalendarBody
+          checkState={checkState}
+          changeFocus={changeFocus}
+          changeDate={changeDate}
+        />
       </CalendarBox>
     </Container>
   );

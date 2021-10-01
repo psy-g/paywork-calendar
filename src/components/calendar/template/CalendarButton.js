@@ -1,13 +1,13 @@
 import React from 'react';
 import styled from 'styled-components/macro';
 
-const CalendarButton = ({ saveState }) => {
+const CalendarButton = ({ changeDate }) => {
   const handlerPrevMonth = () => {
-    saveState(-1);
+    changeDate(-1);
   };
 
   const handlerNextMonth = () => {
-    saveState(+1);
+    changeDate(+1);
   };
 
   return (

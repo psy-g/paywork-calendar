@@ -3,17 +3,17 @@ import styled from 'styled-components/macro';
 
 import CalendarButton from 'components/calendar/template/CalendarButton';
 
-const CalendarHead = ({ calendarState, saveState }) => {
+const CalendarHead = ({ dateState, changeDate }) => {
   const handlerThisMonth = () => {
-    saveState(0);
+    changeDate(0);
   };
 
   return (
     <HeadBlock>
       <MonthWrapper>
-        {calendarState.year}. {calendarState.month + 1}
+        {dateState.year}. {dateState.month + 1}
       </MonthWrapper>
-      <CalendarButton saveState={saveState} />
+      <CalendarButton changeDate={changeDate} />
       <ThisMonthWrapper onClick={handlerThisMonth}>이번달</ThisMonthWrapper>
     </HeadBlock>
   );
