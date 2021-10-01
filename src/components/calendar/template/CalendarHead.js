@@ -3,14 +3,18 @@ import styled from 'styled-components/macro';
 
 import CalendarButton from 'components/calendar/template/CalendarButton';
 
-const CalendarHead = ({ calendarState }) => {
+const CalendarHead = ({ calendarState, saveState }) => {
+  const handlerThisMonth = () => {
+    saveState(0);
+  };
+
   return (
     <HeadBlock>
-      <span>
+      <MonthWrapper>
         {calendarState.year}. {calendarState.month + 1}
-      </span>
-      <CalendarButton />
-      <span>이번달</span>
+      </MonthWrapper>
+      <CalendarButton saveState={saveState} />
+      <ThisMonthWrapper onClick={handlerThisMonth}>이번달</ThisMonthWrapper>
     </HeadBlock>
   );
 };
@@ -22,8 +26,14 @@ const HeadBlock = styled.div`
   width: 100%;
   height: 15%;
 
-  span {
+  div {
     width: calc(100% / 3);
-    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 `;
+
+const MonthWrapper = styled.div``;
+
+const ThisMonthWrapper = styled.div``;

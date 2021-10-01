@@ -2,56 +2,94 @@ import { useState, useEffect } from 'react';
 
 export const useCalendar = () => {
   const [calendarState, setCalendarState] = useState({
-    year: null,
-    month: null,
-    date: null,
+    year: new Date().getFullYear(),
+    month: new Date().getMonth(),
+    date: new Date().getDate(),
   });
-  const [dateArr, setDateArr] = useState([]);
+  const [dateState, setDateState] = useState([]);
 
   useEffect(() => {
-    const date = new Date();
+    saveState(0);
+  }, []);
+
+  const changeState = (number) => {
+    const focusDate = dateState.map((date) => {
+      date.id === number && date.thisMonth
+        ? (date.focus = !date.focus)
+        : (date.focus = false);
+
+      return date;
+    });
+
+    setDateState(focusDate);
+  };
+
+  const saveState = (changeValue) => {
+    // const date = new Date(
+    //   calendarState.year,
+    //   calendarState.month + changeValue,
+    // );
+    const date =
+      changeValue !== 0
+        ? new Date(calendarState.year, calendarState.month + changeValue)
+        : new Date(new Date().getFullYear(), new Date().getMonth());
     const getYear = date.getFullYear();
     const getMonth = date.getMonth();
     const getToday = date.getDate();
-
     const thisMonthLast = new Date(getYear, getMonth + 1, 0);
-    const lastMonthLast = new Date(getYear, getMonth, 0);
+    const prevMonthLast = new Date(getYear, getMonth, 0);
 
-    // console.log(
-    //   '지난달 마지막 요일',
-    //   lastMonthLast.getDay(),
-    //   '날짜',
-    //   lastMonthLast.getDate(),
-    // );
-    // console.log(
-    //   '이번달 마지막 요일',
-    //   thisMonthLast.getDay(),
-    //   '날짜',
-    //   thisMonthLast.getDate(),
-    // );
     // getDay(): 0(일요일) ~ 6(토요일)
     // 지난달 마지막이 0으로 안끝나면 지난달 날짜 몇개도 출력해야함
     // 이번달 마지막이 0으로 안끝나면 다음달 날짜 몇개도 출력해야함
+    // [날짜, 지난달체크, 포커스체크]
 
-    const lastArr = Array.from({ length: lastMonthLast.getDay() }, (v, i) => [
-      lastMonthLast.getDate() - i,
-      false,
-    ]);
-    const thisArr = Array.from({ length: thisMonthLast.getDate() }, (v, i) => [
-      i + 1,
-      true,
-    ]);
+    let temp = [];
+    // 저번달
+    for (let i = 0; i < prevMonthLast.getDay(); i++) {
+      temp.push({
+        id: prevMonthLast.getDate() - i,
+        focus: false,
+        today: false,
+        thisMonth: false,
+      });
+    }
+    // 이번달
+    for (let i = 0; i < thisMonthLast.getDate(); i++) {
+      temp.push({
+        id: i + 1,
+        focus: false,
+        today:
+          new Date().getMonth() === getMonth && getToday === i + 1
+            ? true
+            : false,
+        thisMonth: true,
+      });
+    }
+    // 다음달
+    if (thisMonthLast.getDay() !== 0) {
+      for (let i = 0; i < 7 - thisMonthLast.getDay(); i++) {
+        temp.push({
+          id: i + 1,
+          focus: false,
+          today: false,
+          thisMonth: false,
+        });
+      }
+    }
 
-    setDateArr(lastArr.concat(thisArr));
+    setDateState(temp);
     setCalendarState({
       year: getYear,
       month: getMonth,
       today: getToday,
     });
-  }, []);
+  };
 
   return {
     calendarState,
-    dateArr,
+    dateState,
+    changeState,
+    saveState,
   };
 };
