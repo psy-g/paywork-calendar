@@ -3,7 +3,7 @@ import styled from 'styled-components/macro';
 
 import CalendarItem from 'components/calendar/template/CalendarItem';
 
-const CalendarBody = ({ checkState, changeFocus, changeDate }) => {
+const CalendarBody = ({ checkState, changeFocus, setFocus, changeDate }) => {
   return (
     <BodyBlock>
       <DaysWrapper>
@@ -22,6 +22,7 @@ const CalendarBody = ({ checkState, changeFocus, changeDate }) => {
             data={ele}
             changeDate={changeDate}
             changeFocus={changeFocus}
+            setFocus={setFocus}
           />
         ))}
       </DatesWrapper>

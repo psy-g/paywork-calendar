@@ -3,8 +3,9 @@ import styled from 'styled-components/macro';
 
 import CalendarButton from 'components/calendar/template/CalendarButton';
 
-const CalendarHead = ({ dateState, changeDate }) => {
+const CalendarHead = ({ dateState, changeDate, setFocus }) => {
   const handlerThisMonth = () => {
+    setFocus();
     changeDate(0);
   };
 
@@ -13,7 +14,7 @@ const CalendarHead = ({ dateState, changeDate }) => {
       <MonthWrapper>
         {dateState.year}. {dateState.month + 1}
       </MonthWrapper>
-      <CalendarButton changeDate={changeDate} />
+      <CalendarButton changeDate={changeDate} setFocus={setFocus} />
       <ThisMonthWrapper onClick={handlerThisMonth}>이번달</ThisMonthWrapper>
     </HeadBlock>
   );
