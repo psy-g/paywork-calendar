@@ -1,31 +1,19 @@
 import React from 'react';
 import styled from 'styled-components/macro';
 
-const CalendarItem = ({ data, changeFocus, changeDate }) => {
-  const { id, focus, today, thisMonth } = data;
+const CalendarItem = ({ data, changeFocus, setFocus, changeDate }) => {
+  const { id, focus, month, today, thisMonth } = data;
 
   const handlerFocus = () => {
-    if (thisMonth) changeFocus(id);
-    else {
+    if (!thisMonth) {
       if (id < 7) {
+        setFocus(month, id);
         changeDate(+1);
-        // changeFocus(id);
       } else {
+        setFocus(month, id);
         changeDate(-1);
-        // changeFocus(id);
       }
-    }
-
-    // if (thisMonth) changeState(id);
-    // else {
-    //   if (id < 7) {
-    //     saveState(+1);
-    //     changeState(id);
-    //   } else {
-    //     saveState(-1);
-    //     changeState(id);
-    //   }
-    // }
+    } else changeFocus(id);
   };
 
   return (

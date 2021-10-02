@@ -1,24 +1,25 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
+
+import { dateFormat, thisYear, thisMonth, today } from 'utils/date';
 
 export const useCalendar = () => {
   const [dateState, setDateState] = useState({
-    year: new Date().getFullYear(),
-    month: new Date().getMonth(),
-    today: new Date().getDate(),
+    year: thisYear(),
+    month: thisMonth(),
+    today: today(),
   });
   const [checkState, setCheckState] = useState([]);
+  const focus = useRef({ month: null, date: null });
 
   useEffect(() => {
-    const newCheck = makeDateArr();
-
-    setCheckState(newCheck);
-  }, [dateState]);
+    makeDateArr(dateState.year, dateState.month);
+  }, [dateState.year, dateState.month]);
 
   const changeDate = (changeValue) => {
     const newDate =
       changeValue !== 0
-        ? new Date(dateState.year, dateState.month + changeValue)
-        : new Date(new Date().getFullYear(), new Date().getMonth());
+        ? dateFormat(dateState.year, dateState.month + changeValue)
+        : dateFormat(thisYear(), thisMonth());
 
     setDateState({
       ...dateState,
@@ -39,16 +40,10 @@ export const useCalendar = () => {
     setCheckState(focusDate);
   };
 
-  const makeDateArr = () => {
-    const { year, month } = dateState;
-    const thisMonthLast = new Date(year, month + 1, 0);
-    const prevMonthLast = new Date(year, month, 0);
+  const makeDateArr = (year, month) => {
+    const thisMonthLast = dateFormat(year, month + 1, 0);
+    const prevMonthLast = dateFormat(year, month, 0);
     let tempArr = [];
-
-    // getDay(): 0(일요일) ~ 6(토요일)
-    // 지난달 마지막이 0으로 안끝나면 지난달 날짜 몇개도 출력해야함
-    // 이번달 마지막이 0으로 안끝나면 다음달 날짜 몇개도 출력해야함
-    // [날짜, 지난달체크, 포커스체크]
 
     for (let i = prevMonthLast.getDay(); i > 0; i--) {
       tempArr.push({
@@ -63,11 +58,9 @@ export const useCalendar = () => {
       tempArr.push({
         id: i + 1,
         month: thisMonthLast.getMonth(),
-        focus: false,
-        today:
-          new Date().getMonth() === month && dateState.today === i + 1
-            ? true
-            : false,
+        // focus: false,
+        focus: focus.current.date === i + 1 ? true : false,
+        today: thisMonth() === month && today() === i + 1 ? true : false,
         thisMonth: true,
       });
     }
@@ -83,13 +76,19 @@ export const useCalendar = () => {
       }
     }
 
-    return tempArr;
+    setCheckState(tempArr);
+  };
+
+  const setFocus = (month, date) => {
+    if (!month) focus.current = { month: null, date: null };
+    else focus.current = { month: month, date: date };
   };
 
   return {
     dateState,
     checkState,
     changeFocus,
+    setFocus,
     changeDate,
   };
 };
