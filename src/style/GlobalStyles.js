@@ -16,6 +16,13 @@ const GlobalStyles = createGlobalStyle`
     font-weight: normal;
     font-style: normal;
   }
+  
+  /* @font-face {
+    font-family: 'BMHANNAPro';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_seven@1.0/BMHANNAPro.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+  } */
 
   html {
     font-size: 62.5%;
@@ -23,6 +30,7 @@ const GlobalStyles = createGlobalStyle`
 
   body {
     font-family: "BMJUA", sans-serif;
+    /* font-family: "BMHANNAPro", sans-serif; */
   }
 
   a, a:active, a:hover, a:visited {
