@@ -35,6 +35,15 @@ const HeadBlock = styled.div`
   }
 `;
 
-const MonthWrapper = styled.div``;
+const MonthWrapper = styled.div`
+  font-size: 2.5rem;
+`;
 
-const ThisMonthWrapper = styled.div``;
+const ThisMonthWrapper = styled.div`
+  font-size: 2rem;
+  cursor: pointer;
+
+  &:hover {
+    color: #e53a40;
+  }
+`;

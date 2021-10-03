@@ -24,8 +24,21 @@ export default CalendarButton;
 
 const ButtonBlock = styled.div`
   display: flex;
+  font-size: 2rem;
 `;
 
-const PrevMonth = styled.div``;
+const PrevMonth = styled.div`
+  cursor: pointer;
 
-const NextMonth = styled.div``;
+  &:hover {
+    color: #e53a40;
+  }
+`;
+
+const NextMonth = styled.div`
+  cursor: pointer;
+
+  &:hover {
+    color: #e53a40;
+  }
+`;
