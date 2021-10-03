@@ -4,16 +4,14 @@ import styled from 'styled-components/macro';
 import CalendarItem from 'components/calendar/template/CalendarItem';
 
 const CalendarBody = ({ checkState, changeFocus, setFocus, changeDate }) => {
+  const dayArr = ['월', '화', '수', '목', '금', '토', '일'];
+
   return (
     <BodyBlock>
       <DaysWrapper>
-        <span>월</span>
-        <span>화</span>
-        <span>수</span>
-        <span>목</span>
-        <span>금</span>
-        <span>토</span>
-        <span>일</span>
+        {dayArr.map((ele, idx) => (
+          <span key={idx}>{ele}</span>
+        ))}
       </DaysWrapper>
       <DatesWrapper>
         {checkState.map((ele, idx) => (
