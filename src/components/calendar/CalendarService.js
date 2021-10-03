@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 
 import { dateFormat, thisYear, thisMonth, today } from 'utils/date';
 
@@ -9,11 +9,11 @@ export const useCalendar = () => {
     today: today(),
   });
   const [checkState, setCheckState] = useState([]);
-  const focus = useRef({ month: null, date: null });
+  const [focusState, setFocusState] = useState({ date: null });
 
   useEffect(() => {
-    makeDateArr(dateState.year, dateState.month);
-  }, [dateState.year, dateState.month]);
+    makeCheckArr(dateState.year, dateState.month, focusState.date);
+  }, [dateState.year, dateState.month, focusState.date]);
 
   const changeDate = (changeValue) => {
     const newDate =
@@ -29,46 +29,42 @@ export const useCalendar = () => {
   };
 
   const changeFocus = (dateNum) => {
-    const focusDate = checkState.map((date) => {
-      date.id === dateNum && date.thisMonth
-        ? (date.focus = !date.focus)
-        : (date.focus = false);
+    const focusDate = checkState.map((ele) => {
+      ele.date === dateNum && ele.thisMonth
+        ? (ele.focus = !ele.focus)
+        : (ele.focus = false);
 
-      return date;
+      return ele;
     });
 
     setCheckState(focusDate);
   };
 
-  const makeDateArr = (year, month) => {
+  const makeCheckArr = (year, month, focusDate) => {
     const thisMonthLast = dateFormat(year, month + 1, 0);
     const prevMonthLast = dateFormat(year, month, 0);
-    let tempArr = [];
+    let checkListArr = [];
 
     for (let i = prevMonthLast.getDay(); i > 0; i--) {
-      tempArr.push({
-        id: prevMonthLast.getDate() - i + 1,
-        month: prevMonthLast.getMonth(),
+      checkListArr.push({
+        date: prevMonthLast.getDate() - i + 1,
         focus: false,
         today: false,
         thisMonth: false,
       });
     }
     for (let i = 0; i < thisMonthLast.getDate(); i++) {
-      tempArr.push({
-        id: i + 1,
-        month: thisMonthLast.getMonth(),
-        // focus: false,
-        focus: focus.current.date === i + 1 ? true : false,
+      checkListArr.push({
+        date: i + 1,
+        focus: focusDate === i + 1 ? true : false,
         today: thisMonth() === month && today() === i + 1 ? true : false,
         thisMonth: true,
       });
     }
     if (thisMonthLast.getDay() !== 0) {
       for (let i = 0; i < 7 - thisMonthLast.getDay(); i++) {
-        tempArr.push({
-          id: i + 1,
-          month: thisMonthLast.getMonth() + 1,
+        checkListArr.push({
+          date: i + 1,
           focus: false,
           today: false,
           thisMonth: false,
@@ -76,12 +72,11 @@ export const useCalendar = () => {
       }
     }
 
-    setCheckState(tempArr);
+    setCheckState(checkListArr);
   };
 
-  const setFocus = (month, date) => {
-    if (!month) focus.current = { month: null, date: null };
-    else focus.current = { month: month, date: date };
+  const setFocus = (date) => {
+    setFocusState({ date: date });
   };
 
   return {
