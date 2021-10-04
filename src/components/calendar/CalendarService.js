@@ -1,6 +1,15 @@
 import { useState, useEffect } from 'react';
 
-import { dateFormat, thisYear, thisMonth, today } from 'utils/date';
+import {
+  dateFormat,
+  thisYear,
+  thisMonth,
+  today,
+  dayNum,
+  dateNum,
+  monthNum,
+  yearNum,
+} from 'utils/date';
 
 export const useCalendar = () => {
   const [dateState, setDateState] = useState({
@@ -23,8 +32,8 @@ export const useCalendar = () => {
 
     setDateState({
       ...dateState,
-      year: newDate.getFullYear(),
-      month: newDate.getMonth(),
+      year: yearNum(newDate),
+      month: monthNum(newDate),
     });
   };
 
@@ -45,27 +54,26 @@ export const useCalendar = () => {
     const prevMonthLast = dateFormat(year, month, 0);
     let checkListArr = [];
 
-    for (let i = prevMonthLast.getDay(); i > 0; i--) {
+    for (let i = dayNum(prevMonthLast); i > 0; i--) {
       checkListArr.push({
-        date: prevMonthLast.getDate() - i + 1,
+        date: dateNum(prevMonthLast) - i + 1,
         focus: false,
         today: false,
         sunday: false,
         thisMonth: false,
       });
     }
-    for (let i = 0; i < thisMonthLast.getDate(); i++) {
+    for (let i = 0; i < dateNum(thisMonthLast); i++) {
       checkListArr.push({
         date: i + 1,
         focus: focusDate === i + 1 ? true : false,
         today: thisMonth() === month && today() === i + 1 ? true : false,
-        sunday:
-          dateFormat(year, month, i + 1).getDay() % 7 === 0 ? true : false,
+        sunday: dayNum(dateFormat(year, month, i + 1)) % 7 === 0 ? true : false,
         thisMonth: true,
       });
     }
-    if (thisMonthLast.getDay() !== 0) {
-      for (let i = 0; i < 7 - thisMonthLast.getDay(); i++) {
+    if (dayNum(thisMonthLast) !== 0) {
+      for (let i = 0; i < 7 - dayNum(thisMonthLast); i++) {
         checkListArr.push({
           date: i + 1,
           focus: false,
