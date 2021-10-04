@@ -49,6 +49,11 @@ const DaysWrapper = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+    font-size: 1.5rem;
+
+    :nth-child(7) {
+      color: #e53a40;
+    }
   }
 `;
 

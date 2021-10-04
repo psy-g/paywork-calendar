@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components/macro';
 
 const CalendarItem = ({ data, changeFocus, setFocus, changeDate }) => {
-  const { date, focus, today, thisMonth } = data;
+  const { date, focus, today, sunday, thisMonth } = data;
 
   const handlerFocus = () => {
     if (!thisMonth) {
@@ -18,6 +18,7 @@ const CalendarItem = ({ data, changeFocus, setFocus, changeDate }) => {
       <ItemBlock
         monthCheck={thisMonth}
         focusCheck={focus}
+        sundayCheck={sunday}
         onClick={handlerFocus}
       >
         {date}
@@ -35,8 +36,10 @@ const ItemBlock = styled.div`
   justify-content: center;
   align-items: center;
   width: calc(100% / 7);
+  font-size: 1.5rem;
   cursor: pointer;
-  color: ${(props) => (props.monthCheck ? '#000000' : '#d5d5d6')};
+  color: ${(props) => !props.monthCheck && '#d5d5d6'};
+  color: ${(props) => props.sundayCheck && 'red'};
   color: ${(props) => props.focusCheck && '#fafafa'};
 `;
 
