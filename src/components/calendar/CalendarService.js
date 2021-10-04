@@ -18,8 +18,8 @@ export const useCalendar = () => {
   const changeDate = (changeValue) => {
     const newDate =
       changeValue !== 0
-        ? dateFormat(dateState.year, dateState.month + changeValue)
-        : dateFormat(thisYear(), thisMonth());
+        ? dateFormat(dateState.year, dateState.month + changeValue, 1)
+        : dateFormat(thisYear(), thisMonth(), 1);
 
     setDateState({
       ...dateState,
@@ -50,6 +50,7 @@ export const useCalendar = () => {
         date: prevMonthLast.getDate() - i + 1,
         focus: false,
         today: false,
+        sunday: false,
         thisMonth: false,
       });
     }
@@ -58,6 +59,8 @@ export const useCalendar = () => {
         date: i + 1,
         focus: focusDate === i + 1 ? true : false,
         today: thisMonth() === month && today() === i + 1 ? true : false,
+        sunday:
+          dateFormat(year, month, i + 1).getDay() % 7 === 0 ? true : false,
         thisMonth: true,
       });
     }
@@ -67,6 +70,7 @@ export const useCalendar = () => {
           date: i + 1,
           focus: false,
           today: false,
+          sunday: false,
           thisMonth: false,
         });
       }
