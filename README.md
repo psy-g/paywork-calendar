@@ -1,5 +1,6 @@
 # Paywork Calendar
 
+<h2><a href='https://paywork-calendar.netlify.app/' target='_blank'>바로가기</a> 📅</h2>
 
 ## Implementation List 📌
 - 오늘 날짜에 해당하는 `캘린더`
@@ -15,7 +16,7 @@
 
 
 ## Preview 💗
-<img src="https://user-images.githubusercontent.com/68520394/135766846-4cee125a-78a6-427e-8cae-1847d332f200.gif" alt="drawing" width="500" height="500">
+<img src="https://user-images.githubusercontent.com/68520394/135876770-fecb4c41-f9ac-4ee1-86f6-f539e1da4625.gif" alt="drawing">
 
 
 ## Build Installation 💻
