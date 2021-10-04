@@ -1,6 +1,21 @@
 export const dateFormat = (year, month, date) => {
-  if (date === 0) return new Date(year, month, date);
-  return new Date(year, month);
+  return new Date(year, month, date);
+};
+
+export const dayNum = (dateObj) => {
+  return dateObj.getDay();
+};
+
+export const dateNum = (dateObj) => {
+  return dateObj.getDate();
+};
+
+export const monthNum = (dateObj) => {
+  return dateObj.getMonth();
+};
+
+export const yearNum = (dateObj) => {
+  return dateObj.getFullYear();
 };
 
 export const currentDate = () => {
